@@ -6,7 +6,7 @@ export type FilterField = {
 
 export type NewModelDefinition = {
     name: string,
-    value?: () => any
+    value?: (() => any) | any
 }
 
 export type NewModel = {

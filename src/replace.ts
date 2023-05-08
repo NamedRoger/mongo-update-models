@@ -2,7 +2,7 @@ import getMongoConnection from "./db.ts";
 import { ReplaceOptions } from "./types.ts";
 
 const mongoConnection = await getMongoConnection(
-    'mongodb://localhost:27017/',
+    'mongodb+srv://Vonto-admin-dev:Y5ILULRNxVXloemA@cluster0.phb60td.mongodb.net/?retryWrites=true&w=majority',
     'Dev'
 );
 
@@ -15,7 +15,15 @@ export const replaceAll = async ({ filter, collectionName, newModel }: ReplaceOp
 
     const set = keys.reduce((s, key) => {
         const def = newModel[key];
-        s[def.name] = def.value ? (def.value)() : `\$${key}`;
+        if (def.value) {
+            if (typeof def.value === 'function') {
+                s[def.name] = (def.value)();
+            } else {
+                s[def.name] = def.value;
+            }
+        } else {
+            s[def.name] = `\$${key}`;
+        }
         return s;
     }, init);
 
@@ -42,7 +50,15 @@ export const replaceOne = async ({ filter, collectionName, newModel }: ReplaceOp
 
     const set = keys.reduce((s, key) => {
         const def = newModel[key];
-        s[def.name] = def.value ? (def.value)() : `\$${key}`;
+        if (def.value) {
+            if (typeof def.value === 'function') {
+                s[def.name] = (def.value)();
+            } else {
+                s[def.name] = def.value;
+            }
+        } else {
+            s[def.name] = `\$${key}`;
+        }
         return s;
     }, init);
 

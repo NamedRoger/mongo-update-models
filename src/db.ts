@@ -1,16 +1,16 @@
-import { Database, MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
+import { Db, MongoClient } from "npm:mongodb";
 
 interface IMongoConnection {
     client: MongoClient,
-    database: Database
+    database: Db
 }
 
 let monogConnection: IMongoConnection | null = null;
 
 const createConnection = async (connectionString: string, databaesName: string): Promise<IMongoConnection> => {
-    const client = new MongoClient();
-    await client.connect(connectionString);
-    const database = client.database(databaesName);
+    const client = new MongoClient(connectionString);
+    await client.connect();
+    const database = client.db(databaesName);
 
     return {
         client,

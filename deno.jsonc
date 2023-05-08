@@ -1,5 +1,6 @@
 {
     "tasks": {
-        "start": "deno run --allow-all ./src/main.ts"
+        "start": "deno run -Ar --unstable ./src/main.ts",
+        "cache": "deno cache cache.ts"
     }
 }
